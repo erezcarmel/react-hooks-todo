@@ -6,15 +6,30 @@ import {
 	Col,
 	ListGroup
 } from 'react-bootstrap';
+import {
+	updateList,
+	updateServer
+} from '../../redux/reducers/todo/actions';
 
 import './style.scss';
-
-const updateItem = item => ({ type: "UPDATE_ITEM", item });
-const removeItem = item => ({ type: "REMOVE_ITEM", item });
 
 const List = () => {
 	const dispatch = useDispatch();
 	const todos = useSelector(state => state.todos);
+	dispatch(updateServer(todos));
+
+	const update = (todo, checked) => {
+		dispatch(
+			updateList([...todos]
+				.map(item => todo.value === item.value ? {...item, done: checked} : item))
+		);
+	};
+
+	const remove = item => {
+		dispatch(
+			updateList([...todos].filter(todo => todo !== item))
+		);
+	};
 
 	return (
 		<Container className="list" data-testid="list">
@@ -35,13 +50,12 @@ const List = () => {
 												data-testid={`${item.value}_done`}
 												type="checkbox"
 												checked={item.done}
-												onChange={({target: { checked }}) =>
-													dispatch(updateItem({...item, done: checked}))}
+												onChange={({target: { checked }}) => update(item, checked)}
 											/>
 											<button
 												data-testid={`${item.value}_remove`}
 												className="remove"
-												onClick={() => dispatch(removeItem(item))}
+												onClick={() => remove(item)}
 											>
 												X
 											</button>

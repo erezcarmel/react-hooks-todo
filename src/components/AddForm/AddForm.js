@@ -7,14 +7,15 @@ import {
 	Button
 } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
+import {
+	addItem
+} from '../../redux/reducers/todo/actions';
 
 import './style.scss';
 
 const AddForm = () => {
 	const dispatch = useDispatch();
 	const [item, updateItem] = useState('');
-
-	const addItem = value => ({ type: "ADD_ITEM", value });
 
 	const handleSubmit = event => {
 		event.preventDefault();
