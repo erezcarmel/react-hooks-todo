@@ -8,7 +8,7 @@ import './App.css';
 
 const App = () => {
   return (
-    <div className="app">
+    <div className="app" data-testid="app">
       <AddForm />
 			<List/>
     </div>

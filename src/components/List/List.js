@@ -17,7 +17,7 @@ const List = () => {
 	const todos = useSelector(state => state.todos);
 
 	return (
-		<Container className="list">
+		<Container className="list" data-testid="list">
 			<Row>
 				<Col xs={{ span: 8, offset: 2 }}>
 					{
@@ -25,18 +25,21 @@ const List = () => {
 							<ListGroup>
 								{ todos.map(item =>
 									<ListGroup.Item
+										data-testid={item.value}
 										key={item.value}
 										className={item.done ? 'done' : ''}
 									>
 										{ item.value }
 										<div className="buttons">
 											<input
+												data-testid={`${item.value}_done`}
 												type="checkbox"
 												checked={item.done}
 												onChange={({target: { checked }}) =>
 													dispatch(updateItem({...item, done: checked}))}
 											/>
 											<button
+												data-testid={`${item.value}_remove`}
 												className="remove"
 												onClick={() => dispatch(removeItem(item))}
 											>

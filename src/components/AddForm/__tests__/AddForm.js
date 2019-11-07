@@ -1,20 +1,21 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { render, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
-import store from '../../../redux';
 import AddForm from '../AddForm';
+import store from '../../../redux';
 
-test('shows the children when the checkbox is checked', () => {
+test('adding item to store todos array', () => {
+	jest.spyOn(store, 'dispatch');
+	const expectation = { type: 'ADD_ITEM', value: 'My todo' };
 	const { getByTestId } = render(
 		<Provider store={store}>
 			<AddForm />
 		</Provider>
 	);
 	const input = getByTestId('todo-input');
-
-	input.value = 'My todo';
+	fireEvent.change(input, { target: { value: expectation.value } });
 	fireEvent.click(getByTestId('add-btn'));
 
-	// expect(...) TODO: Test addTodo was called with right value`
+	expect(store.dispatch).toBeCalledWith(expectation);
+	expect(store.getState().todos.length).toEqual(1);
 });

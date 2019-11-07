@@ -23,7 +23,7 @@ const AddForm = () => {
 	};
 
 	return (
-		<Container className="add-form">
+		<Container className="add-form" data-testid="add-form">
 			<Row>
 				<Col xs={{ span: 8, offset: 2 }}>
 					<Form onSubmit={handleSubmit}>
